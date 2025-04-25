@@ -3,7 +3,7 @@
     
 <footer class="bg-light text-center py-3 mt-auto">
             <div class="container">
-                <p class="mb-0">&copy; <?= date('Y'); ?> SimKios - Dibuat dengan ❤️ oleh Bryann</p>
+                <p class="mb-0">&copy; <?= date('Y'); ?> SimKios - Dibuat dengan ❤️ oleh Bryan</p>
             </div>
         </footer>
     </div> <!-- Tutup wrapper utama -->
@@ -14,10 +14,13 @@
     <script>
   // Hapus parameter URL agar alert tidak muncul saat refresh
   if (window.history.replaceState) {
-    const url = new URL(window.location);
-    url.search = '';
-    window.history.replaceState({}, document.title, url);
-  }
+  const url = new URL(window.location);
+  // Cek jika ada parameter status atau message, hapus saja parameter itu
+  url.searchParams.delete('status');
+  url.searchParams.delete('message');
+  window.history.replaceState({}, document.title, url);
+}
+
 </script>
 
 </body>

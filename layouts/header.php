@@ -37,11 +37,11 @@ if (session_status() == PHP_SESSION_NONE) {
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="index.php">Dashboard</a></li>
-                    <li class="nav-item"><a class="nav-link" href="pages/barang.php">Barang</a></li>
-                    <li class="nav-item"><a class="nav-link" href="pages/transaksi.php">Transaksi</a></li>
-                    <li class="nav-item"><a class="nav-link" href="pages/laporan.php">Laporan</a></li>
-                    <li class="nav-item"><a class="nav-link" href="pages/utang.php">Utang</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/simkios/index.php">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/simkios/pages/barang.php">Barang</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/simkios/pages/transaksi.php">Transaksi</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/simkios/pages/laporan.php">Laporan</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/simkios/pages/utang.php">Utang</a></li>
                 </ul>
             </div>
         </div>

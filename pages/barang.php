@@ -22,7 +22,7 @@
                 <th>Harga Beli</th>
                 <th>Harga Jual</th>
                 <th>Stok</th>
-                <th>Created At</th>
+                <th>Tanggal & Waktu</th>
                 <th>Aksi</th>
             </tr>
         </thead>
