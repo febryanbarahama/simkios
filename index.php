@@ -2,13 +2,11 @@
 include 'layouts/header.php'; 
 include 'config/koneksi.php'; 
 
-// Ambil data dari database
 $total_barang = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as total FROM barang"))['total'];
-$total_transaksi = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as total FROM transaksi WHERE DATE(tanggal) = CURDATE()"))['total'];
-$total_pendapatan = mysqli_fetch_assoc(mysqli_query($conn, "SELECT SUM(total_harga) as total FROM transaksi WHERE DATE(tanggal) = CURDATE()"))['total'] ?? 0;
+$total_transaksi = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as total FROM transaksi WHERE DATE(created_at) = CURDATE()"))['total'];
+$total_pendapatan = mysqli_fetch_assoc(mysqli_query($conn, "SELECT SUM(total_harga) as total FROM transaksi WHERE DATE(created_at) = CURDATE()"))['total'] ?? 0;
 
-// Ambil 5 transaksi terbaru
-$query_transaksi = mysqli_query($conn, "SELECT * FROM transaksi ORDER BY tanggal DESC LIMIT 5");
+$query_transaksi = mysqli_query($conn, "SELECT * FROM transaksi ORDER BY created_at DESC LIMIT 5");
 ?>
 
 <h1 class="mb-4">Dashboard SimKios</h1>
@@ -42,25 +40,38 @@ $query_transaksi = mysqli_query($conn, "SELECT * FROM transaksi ORDER BY tanggal
 
 <!-- Daftar Transaksi Terbaru -->
 <h3 class="mt-5">Transaksi Terbaru</h3>
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>No</th>
-            <th>Nama Barang</th>
-            <th>Tanggal</th>
-            <th>Total Harga</th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php while ($row = mysqli_fetch_assoc($query_transaksi)): ?>
-        <tr>
-            <td><?= $row['id_transaksi']; ?></td>
-            <td><?= $row['nama_barang']; ?></td>
-            <td><?= date('d M Y, H:i', strtotime($row['tanggal'])); ?></td>
-            <td>Rp <?= number_format($row['total_harga'], 0, ',', '.'); ?></td>
-        </tr>
-        <?php endwhile; ?>
-    </tbody>
-</table>
+<table class="table table-bordered table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>No</th>
+                <th>Nama Pembeli</th>
+                <th>Tanggal</th>
+                <th>Total</th>
+                <th>Bayar</th>
+                <th>Kembalian</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            $no = 1;
+            $query = mysqli_query($conn, "SELECT * FROM transaksi ORDER BY created_at DESC");
+            while ($row = mysqli_fetch_assoc($query)) :
+            ?>
+                <tr>
+                    <td><?= $no++ ?></td>
+                    <td><?= htmlspecialchars($row['nama_pembeli']) ?></td>
+                    <td><?= date('d-m-Y H:i', strtotime($row['created_at'])) ?></td>
+                    <td>Rp <?= number_format($row['total_harga'], 0, ',', '.') ?></td>
+                    <td>Rp <?= number_format($row['jumlah_bayar'], 0, ',', '.') ?></td>
+                    <td>Rp <?= number_format($row['kembalian'], 0, ',', '.') ?></td>
+                    <td>
+                        <a href="/simkios/pages/detail_transaksi.php?id=<?= $row['id'] ?>" class="btn btn-sm btn-info">Detail</a>
+                    </td>
+                </tr>
+            <?php endwhile; ?>
+        </tbody>
+    </table>
+
 
 <?php include 'layouts/footer.php'; ?>
